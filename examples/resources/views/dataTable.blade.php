@@ -9,10 +9,20 @@
        $('#dataTable1').DataTable({
             processing: true,
             serverSide: true,
-            ajax: "{{ route('loadDataTable') }}",
+            ajax: "data-tables-data",
             columns: [
                 { data: 'dist_id'},
-                { data: 'dist_name'},
+                { 
+                    data: 'dist_name',
+                    render: function(column2, type, row) {
+                        return `<a href="/findDistrictById/${column2}" >${column2}</a>`;
+                    }
+                },
+                { data: 'dist_id',
+                    render: function(id, type, row) {
+                        return `<button><a href="/editDistrictById/${id}" >Edit</a></buttton>`;
+                    }
+                },
             ]
         });
     });
@@ -21,8 +31,10 @@
     <table id="dataTable1" >
     <thead>
     <tr>
+        <th>Slno</th>
         <th>District ID</th>
         <th>District Name</th>
+        <th>Action</th>
     </tr>
 </thead>
     </table>
